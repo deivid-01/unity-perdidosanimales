@@ -6,12 +6,16 @@ public class CameraMove : MonoBehaviour
 {
     public Camera camera;
     public Transform[]pivotes;
-    public int pivoteActual;
+    public static  int pivoteActual;
     public float speed;
+
+    private void Awake ()
+    {
+        pivoteActual = 0;
+    }
     void Start ()
     {
         GameEvent.instance.OnNextZone += NextPivote;
-        pivoteActual = 0;
     }
 
     public void NextPivote () { 

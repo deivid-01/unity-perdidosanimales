@@ -11,19 +11,35 @@ public class AnimalFounder : MonoBehaviour
 
     private List<int >idUsed=new List<int>();
     
-    public int goldenId;
+    public int goldenId=-1;
 
+
+    private void Awake ()
+    {
+        SetAnimalId ();
+        SetGoldenId ();
+    }
+    private void OnEnable ()
+    {
+        SetGoldenId ();
+
+    }
+    private void OnDisable ()
+    {
+        goldenId = -1;
+    }
     void Start ()
     {
 
-        SetAnimalId ();
-        SetGoldenId ();
+     
         GameEvent.instance.ChangeColor ( goldenId );
         GameEvent.instance.OnMouseOverAnimal += AnimalSelected;
+     
     }
 
     private void AnimalSelected ( int id )
     {
+        Debug.Log ( goldenId +"<-gold|id->"+ id );
         if ( id == goldenId )
         {
             Debug.Log ( "Encontraste al animal" );

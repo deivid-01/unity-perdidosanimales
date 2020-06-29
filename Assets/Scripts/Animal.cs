@@ -11,12 +11,14 @@ public class Animal : MonoBehaviour
     {
         isTheOne = false;
         GameEvent.instance.OnVerifiedAnimal += IsTheOne;
+       
     }
 
     public  void IsTheOne (int id) {
         if ( id == this.id )
         {
             isTheOne = true;
+          
         }
       
         
@@ -24,6 +26,7 @@ public class Animal : MonoBehaviour
     private void OnMouseDown ()
     {
         GameEvent.instance.MouseOverAnimal ( id );
+        Debug.Log ( $"Click on{this.transform.GetChild ( 0 ).gameObject.name}" );
     }
 
     private void OnDrawGizmos ()
@@ -36,7 +39,7 @@ public class Animal : MonoBehaviour
         { 
             Gizmos.color = Color.red;
         }
-        Gizmos.DrawWireSphere ( transform.position ,1);
+        Gizmos.DrawSphere ( transform.position ,1);
         
     }
 }
