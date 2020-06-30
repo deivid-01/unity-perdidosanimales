@@ -19,10 +19,16 @@ public class GameEvent : MonoBehaviour
 
     public event Action<int> OnVerifiedAnimal;
     public event Action OnNextZone;
-    
+
+    public event Action <string  > OnAnswerAnimal;
+
+    public event Action <bool>OnCheckedAnswer;
 
     public void MouseOverAnimal ( int id ) => OnMouseOverAnimal?.Invoke ( id );
     public void ChangeColor (int id) => OnVerifiedAnimal?.Invoke (id );
 
+    public void AnswerAnimal ( string name ) => OnAnswerAnimal?.Invoke ( name );
+
     public void NextZone () => OnNextZone?.Invoke ();
+    public  void CheckedAnswer ( bool ans ) => OnCheckedAnswer?.Invoke ( ans );
 }

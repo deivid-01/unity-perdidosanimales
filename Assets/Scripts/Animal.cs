@@ -7,9 +7,13 @@ public class Animal : MonoBehaviour
     public int id;
     bool isTheOne;
 
-    private void Start ()
+    private void Awake ()
     {
         isTheOne = false;
+    }
+
+    private void Start ()
+    {
         GameEvent.instance.OnVerifiedAnimal += IsTheOne;
        
     }
@@ -26,6 +30,8 @@ public class Animal : MonoBehaviour
     private void OnMouseDown ()
     {
         GameEvent.instance.MouseOverAnimal ( id );
+
+        this.GetComponent<AudioSource> ().Play ();
         Debug.Log ( $"Click on{this.transform.GetChild ( 0 ).gameObject.name}" );
     }
 

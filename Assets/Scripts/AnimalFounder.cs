@@ -10,7 +10,7 @@ public class AnimalFounder : MonoBehaviour
     public Animal[]animals;
 
     private List<int >idUsed=new List<int>();
-    
+
     public int goldenId=-1;
 
 
@@ -19,42 +19,58 @@ public class AnimalFounder : MonoBehaviour
         SetAnimalId ();
         SetGoldenId ();
     }
-    private void OnEnable ()
-    {
-        SetGoldenId ();
 
-    }
     private void OnDisable ()
     {
         goldenId = -1;
     }
-    void Start ()
+    IEnumerator Start ()
     {
 
-     
+        yield return new WaitForSeconds ( 0.001f );
         GameEvent.instance.ChangeColor ( goldenId );
         GameEvent.instance.OnMouseOverAnimal += AnimalSelected;
-     
+
+        QuestionAnimal ();
     }
 
+    public void QuestionAnimal ()
+    {
+
+        foreach ( Animal anim in animals )
+        {
+            if ( anim.id.Equals ( goldenId ) )
+            {
+                GameEvent.instance.AnswerAnimal ( anim.gameObject.name );
+                return;
+            }
+        }
+
+    }
     private void AnimalSelected ( int id )
     {
-        Debug.Log ( goldenId +"<-gold|id->"+ id );
+        if(gameObject.activeInHierarchy)
+            StartCoroutine ( Check ( id ) );
+
+    }
+
+    private IEnumerator Check ( int id )
+    {
+        yield return new WaitForSeconds ( 1.0f );
+
         if ( id == goldenId )
         {
-            Debug.Log ( "Encontraste al animal" );
-            //Poner corrutina 
+            GameEvent.instance.CheckedAnswer ( true );
+            yield return new WaitForSeconds ( 1f );
             GameEvent.instance.NextZone ();
-
         }
         else
         {
-            Debug.Log ( "Ese no es el animal que buscas" );
-
+            GameEvent.instance.CheckedAnswer ( false );
         }
     }
 
-    public void SetGoldenId () => goldenId = UnityEngine.Random.Range ( 0 , animals.Length);
+    public void SetGoldenId () => goldenId = UnityEngine.Random.Range ( 0 , animals.Length );
 
 
 
@@ -92,4 +108,4 @@ public class AnimalFounder : MonoBehaviour
 
         return 0;
     }
- }
+}
