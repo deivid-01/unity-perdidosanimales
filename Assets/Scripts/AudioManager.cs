@@ -22,30 +22,49 @@ public class AudioManager : MonoBehaviour
     {
         GameEvent.instance.OnAnswerAnimal += Play;
         GameEvent.instance.OnCheckedAnswer += Play;
-       
+        GameEvent.instance.OnTellIntro += PlayIntro;
+        GameEvent.instance.OnPlayFinalMess += PlayFinal;
     }
+    public void PlayFinal ()
+    {
+        finalMessage.source.Play ();
+        Debug.Log ( "oliwis" );
+    }
+
 
     public Sound[]narrativeQuestions;
 
     public Sound[]rightAnswers;
 
     public Sound[]wrongAnswers;
+
+    public Sound intro;
+
+    public Sound finalMessage;
     void Awake()
     {
         SetSourceComponent ( narrativeQuestions );
         SetSourceComponent ( rightAnswers );
         SetSourceComponent ( wrongAnswers );
-
+        AddSoundComponent ( intro );
+        AddSoundComponent ( finalMessage );
     }
 
     private void SetSourceComponent ( Sound [] sounds )
     {
         foreach ( Sound sound in sounds )
         {
-            sound.source = gameObject.AddComponent<AudioSource> ();
-            sound.source.clip = sound.clip;
-            sound.source.volume = sound.volume;
+            AddSoundComponent ( sound );
+            
+          
         }
+    }
+
+    private void AddSoundComponent ( Sound sound )
+    {
+        sound.source = gameObject.AddComponent<AudioSource> ();
+        sound.source.clip = sound.clip;
+        sound.source.volume = sound.volume;
     }
 
     public void Play ( string name)
@@ -56,6 +75,10 @@ public class AudioManager : MonoBehaviour
     }
 
 
+    private void PlayIntro () {
+        intro.source.Play ();
+
+    }
     public void Play ( bool right) {
         if ( right )
         {

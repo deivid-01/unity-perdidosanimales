@@ -61,7 +61,7 @@ public class AnimalFounder : MonoBehaviour
         if ( id == goldenId )
         {
             GameEvent.instance.CheckedAnswer ( true );
-            yield return new WaitForSeconds ( 1f );
+            yield return new WaitForSeconds ( 0.9f );
             GameEvent.instance.NextZone ();
         }
         else

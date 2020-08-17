@@ -6,10 +6,12 @@ public class Animal : MonoBehaviour
 {
     public int id;
     bool isTheOne;
+    bool touchAlready;
 
     private void Awake ()
     {
         isTheOne = false;
+        touchAlready = false;
     }
 
     private void Start ()
@@ -29,10 +31,16 @@ public class Animal : MonoBehaviour
     }
     private void OnMouseDown ()
     {
+        if ( !touchAlready )
+        { 
         GameEvent.instance.MouseOverAnimal ( id );
 
+       
+        touchAlready = true;
+        
+        }
         this.GetComponent<AudioSource> ().Play ();
-        Debug.Log ( $"Click on{this.transform.GetChild ( 0 ).gameObject.name}" );
+      //  this.GetComponent<Collider> ().enabled = false;
     }
 
     private void OnDrawGizmos ()
